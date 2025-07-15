@@ -21,10 +21,15 @@ function AccountsReceivable() {
         const [newHeaders, ...newRows] = excelData;
 
         if (isCommentFile) {
+          const accountNumberIndex = newHeaders.indexOf('Account Number');
+          const commentIndex = newHeaders.indexOf('Comments') !== -1
+            ? newHeaders.indexOf('Comments')
+            : newHeaders.indexOf('comments'); // handle both cases
+
           const newComments = {};
           newRows.forEach(row => {
-            const accountNumber = row[newHeaders.indexOf('Account Number')];
-            const comment = row[newHeaders.indexOf('comments')];
+            const accountNumber = row[accountNumberIndex];
+            const comment = row[commentIndex];
             if (accountNumber && comment) {
               newComments[accountNumber] = comment;
             }
