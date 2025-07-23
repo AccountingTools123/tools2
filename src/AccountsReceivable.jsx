@@ -21,17 +21,17 @@ function AccountsReceivable() {
         const [newHeaders, ...newRows] = excelData;
 
         if (isCommentFile) {
-          const accountNumberIndex = newHeaders.indexOf('Account Number');
+          const invoiceNameIndex = newHeaders.indexOf('Invoice Name');
           const commentIndex = newHeaders.indexOf('Comments') !== -1
             ? newHeaders.indexOf('Comments')
             : newHeaders.indexOf('comments'); // handle both cases
 
           const newComments = {};
           newRows.forEach(row => {
-            const accountNumber = row[accountNumberIndex];
+            const invoiceName = row[invoiceNameIndex];
             const comment = row[commentIndex];
-            if (accountNumber && comment) {
-              newComments[accountNumber] = comment;
+            if (invoiceName && comment) {
+              newComments[invoiceName] = comment;
             }
           });
           resolve(newComments);
@@ -71,9 +71,9 @@ function AccountsReceivable() {
   const updateComments = () => {
     if (Object.keys(comments).length > 0 && data.length > 0) {
       const updatedData = data.map(row => {
-        const accountNumber = row['Account Number'];
-        if (comments[accountNumber]) {
-          return { ...row, Comments: comments[accountNumber] };
+        const invoiceName = row['Invoice Name'];
+        if (comments[invoiceName]) {
+          return { ...row, Comments: comments[invoiceName] };
         }
         return row;
       });
